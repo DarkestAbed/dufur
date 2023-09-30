@@ -10,7 +10,7 @@ def load_html_page(url_loc: str) -> BeautifulSoup:
     url_to_request = url_loc[1]
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36'}
     url_request = requests.get(url=url_to_request, headers=headers)
-    logging.info(f"REQUESTS status code: {url_request.status_code}")
+    logging.debug(f"REQUESTS status code: {url_request.status_code}")
     if url_request.status_code != 200:
         raise Exception("Error retrieving source code")
     url_data = url_request.content

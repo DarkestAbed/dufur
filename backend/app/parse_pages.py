@@ -5,6 +5,7 @@ import os
 
 def get_pages_from_json(pages_loc: str = None) -> dict:
     from pprint import pprint
+    logging.info("Loading static assets...")
     if pages_loc is None:
         pages_loc = os.path.join(os.getcwd(), "assets", "cursos.json")
         logging.debug(pages_loc)
@@ -19,6 +20,7 @@ def get_pages_from_json(pages_loc: str = None) -> dict:
 
 def parse_pages(pages_dict: dict) -> dict:
     # from pprint import pprint
+    logging.info("Parsing data from static assets...")
     base_url = "https://nataliadufuur.com/product"
     new_dict = {}
     idx = 0
