@@ -14,11 +14,11 @@ def main():
     logging.debug(new_dict_pages)
     for index in range(0, 3):
         page = retrieve_page(pages_dict=new_dict_pages, idx=index)
-        # logging.info(page)
-        # print(f"{index + 1} : {page}")
+        logging.info(page)
+        print(f"{index + 1} : {page}")
         soup = load_html_page(page)
         cupos_disponibles = fetch_stock_item(soup=soup)
-        # print(f"Cupos disponibles? : {cupos_disponibles}")
+        print(f"Cupos disponibles? : {cupos_disponibles}")
         store_data_in_dict(page=page, availability=cupos_disponibles)
 
 
