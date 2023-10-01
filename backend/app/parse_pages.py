@@ -4,8 +4,7 @@ import os
 
 
 def get_pages_from_json(pages_loc: str = None) -> dict:
-    from pprint import pprint
-    logging.info("Loading static assets...")
+    # from pprint import pprint
     if pages_loc is None:
         pages_loc = os.path.join(os.getcwd(), "assets", "cursos.json")
         logging.debug(pages_loc)
@@ -18,9 +17,8 @@ def get_pages_from_json(pages_loc: str = None) -> dict:
     return dict_pages
 
 
-def parse_pages(pages_dict: dict) -> dict:
+def parse_pages_from_dict(pages_dict: dict) -> dict:
     # from pprint import pprint
-    logging.info("Parsing data from static assets...")
     base_url = "https://nataliadufuur.com/product"
     new_dict = {}
     idx = 0
@@ -43,3 +41,22 @@ def parse_pages(pages_dict: dict) -> dict:
 
 def retrieve_page(pages_dict: dict, idx: int) -> str:
     return (pages_dict[idx]["category"], pages_dict[idx]["full_page"])
+
+
+def parse_pages(pages_loc: str = None) -> dict:
+    logging.info("Loading static assets...")
+    try:
+        dict_pages = get_pages_from_json(pages_loc=pages_loc)
+        logging.info("Pages loaded. Proceeding...")
+    except Exception:
+        logging.critical("Error getting classes asset")
+        raise Exception
+    logging.debug(dict_pages)
+    logging.info("Parsing data from static assets...")
+    try:
+        dict_pages = parse_pages_from_dict(pages_dict=dict_pages)
+        logging.info("Data parsed. Proceeding...")
+    except Exception:
+        logging.critical("Error parsing classes data")
+        raise Exception
+    return dict_pages

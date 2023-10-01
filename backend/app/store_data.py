@@ -51,7 +51,7 @@ def store_in_file(data: dict, path_to_file: str) -> None:
     return None
 
 
-def store_process(pages: dict) -> None:
+def store_process(pages: dict) -> dict:
     import os
     # import pdb
     from datetime import datetime
@@ -73,4 +73,4 @@ def store_process(pages: dict) -> None:
     except Exception:
         logging.critical("Error saving data to disk.")
         raise Exception
-    return None
+    return data_dict
