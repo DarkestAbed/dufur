@@ -3,3 +3,5 @@ venv/
 # files
 *.pyc
 *-data.json
+*-message.txt
+config_vars.yml
