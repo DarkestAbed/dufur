@@ -1,7 +1,8 @@
 # folders
 venv/
 # files
+output/*.log
+output/*-data.json
+output/*-message.txt
 *.pyc
-*-data.json
-*-message.txt
 config_vars.yml

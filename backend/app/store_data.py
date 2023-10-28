@@ -31,7 +31,12 @@ def store_all_data(pages: dict) -> dict:
         page = retrieve_page(pages_dict=pages, idx=index)
         logging.debug(page)
         logging.debug(f"{index + 1} : {page}")
-        soup = load_html_page(page)
+        try:
+            soup = load_html_page(page)
+        except Exception as e:
+            msg = f"Encontramos un error al buscar las clases, para la clase {page[0]}, URL {page[1]}"
+            logging.error(msg=msg)
+            next
         cupos_disponibles = fetch_stock_item(soup=soup)
         temp_data = store_data_in_dict(page=page, availability=cupos_disponibles)
         logging.debug(f"Cupos disponibles? : {temp_data.get('category')} ({temp_data.get('date_class')}) :: {temp_data.get('availability')}")

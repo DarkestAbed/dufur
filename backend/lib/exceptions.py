@@ -1,0 +1,2 @@
+class URLReturnsErrorCode(Exception):
+    pass
