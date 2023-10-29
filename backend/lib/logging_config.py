@@ -2,7 +2,7 @@ import logging
 import os
 
 from datetime import datetime
-from assets.config import LOGGING_LEVEL, LOGGING_FORMAT, DATETIME_FMT
+from assets.config import LOGGING_LEVEL_CONSOLE, LOGGING_LEVEL_FILE, LOGGING_FORMAT, DATETIME_FMT
 
 
 # logging config
@@ -15,9 +15,9 @@ console_log = logging.StreamHandler()
 log_path = os.path.join(os.getcwd(), "output", f"{date}-execution.log")
 file_log = logging.FileHandler(filename=log_path, mode="w", encoding="latin-1", delay=False)
 ## set levels
-logger.setLevel(LOGGING_LEVEL)
-console_log.setLevel(LOGGING_LEVEL)
-file_log.setLevel(LOGGING_LEVEL)
+logger.setLevel(logging.DEBUG)
+console_log.setLevel(LOGGING_LEVEL_CONSOLE)
+file_log.setLevel(LOGGING_LEVEL_FILE)
 ## set up formatter
 formatter = logging.Formatter(LOGGING_FORMAT)
 console_log.setFormatter(formatter)
