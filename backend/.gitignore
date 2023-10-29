@@ -4,5 +4,6 @@ venv/
 output/*.log
 output/*-data.json
 output/*-message.txt
+output/*-email_template.html
 *.pyc
 config_vars.yml

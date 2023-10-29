@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Estas son las clases y su disponibilidad</h1>
+    <table>
+        <tr>
+            <th>Clase</th>
+            <th>Fecha</th>
+            <th>Cupos disponibles</th>
+        </tr>
+        {% for row in data %}
+            {% for key, value in data.items() %}
+                <p>Key: {{key}}</p>
+                <p>Value: {{value}}</p>
+                <tr>
+                    <td>{{ row.category }}</td>
+                    <td>{{ row.date_class }}</td>
+                    <td>{{ row.availability }}</td>
+                </tr>
+            {% endfor %}
+        {% endfor %}
+    </table>
+{% endblock %}

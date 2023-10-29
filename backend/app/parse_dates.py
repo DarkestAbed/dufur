@@ -1,4 +1,4 @@
-import logging
+from lib.logging_config import logger
 
 
 def find_occurrences(s, ch):
@@ -16,21 +16,21 @@ def get_day_time_of_class(url: str) -> str:
     ## date_class_raw provides ddd-hhmm ; if provides ddd-hh, something must be done
     date_class_raw_opt_1 = url[idxs_slashes[3] + 1:idxs_dashes[1]]
     date_class_raw_opt_2 = url[idxs_slashes[3] + 1:idxs_dashes[2]]
-    logging.debug(date_class_raw_opt_1)
-    logging.debug(date_class_raw_opt_2)
+    logger.debug(date_class_raw_opt_1)
+    logger.debug(date_class_raw_opt_2)
     date_class_split = date_class_raw_opt_1.split("-")
-    logging.debug(date_class_split)
+    logger.debug(date_class_split)
     date_class = date_class_split[0]
     time_class_raw = date_class_split[1]
-    logging.debug(len(date_class_split))
+    logger.debug(len(date_class_split))
     if len(time_class_raw) == 4:
         time_class = f"{time_class_raw[0:2]}:{time_class_raw[2:]}"
     elif len(time_class_raw) < 4:
         date_class_split = date_class_raw_opt_2.split("-")
         time_class_raw = [date_class_split[1].strip(), date_class_split[2].strip().strip("hrs")]
-        logging.debug(time_class_raw)
+        logger.debug(time_class_raw)
         time_class = f"{time_class_raw[0]}:{time_class_raw[1]}"
     else:
         raise Exception("Error fetching day and time of class")
-    logging.debug(f"{date_class} {time_class}")
+    logger.debug(f"{date_class} {time_class}")
     return f"{date_class} {time_class}"

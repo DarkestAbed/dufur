@@ -1,10 +1,6 @@
-import logging
-
 from app.parse_pages import parse_pages
 from app.store_data import store_process
 from app.send_email import email_process
-
-logging.basicConfig(level=logging.INFO, format="%(asctime)s :: %(levelname)s :: %(message)s")
 
 
 def main():

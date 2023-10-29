@@ -1,19 +1,20 @@
 import json
-import logging
 import os
+
+from lib.logging_config import logger
 
 
 def get_pages_from_json(pages_loc: str = None) -> dict:
     # from pprint import pprint
     if pages_loc is None:
         pages_loc = os.path.join(os.getcwd(), "assets", "cursos.json")
-        logging.debug(pages_loc)
-    logging.debug(os.path.exists(path=pages_loc))
+        logger.debug(pages_loc)
+    logger.debug(os.path.exists(path=pages_loc))
     if not os.path.exists(path=pages_loc):
         raise Exception("No JSON file located")
     with open(file=pages_loc, mode="r") as file:
         dict_pages = json.load(file)
-    logging.debug(dict_pages)
+    logger.debug(dict_pages)
     return dict_pages
 
 
@@ -25,7 +26,7 @@ def parse_pages_from_dict(pages_dict: dict) -> dict:
     for key, item in pages_dict.items():
         if isinstance(item, list):
             for page in item:
-                logging.debug(f"{key}: {base_url}/{page}")
+                logger.debug(f"{key}: {base_url}/{page}")
                 new_dict[idx] = {
                     "category": key,
                     "base_page": page,
@@ -34,8 +35,8 @@ def parse_pages_from_dict(pages_dict: dict) -> dict:
                 idx += 1
         else:
             pass
-            logging.debug(f"{key}: {item}")
-    logging.debug(new_dict)
+            logger.debug(f"{key}: {item}")
+    logger.debug(new_dict)
     return new_dict
 
 
@@ -44,19 +45,19 @@ def retrieve_page(pages_dict: dict, idx: int) -> str:
 
 
 def parse_pages(pages_loc: str = None) -> dict:
-    logging.info("Loading static assets...")
+    logger.info("Loading static assets...")
     try:
         dict_pages = get_pages_from_json(pages_loc=pages_loc)
-        logging.info("Pages loaded. Proceeding...")
+        logger.info("Pages loaded. Proceeding...")
     except Exception:
-        logging.critical("Error getting classes asset")
+        logger.critical("Error getting classes asset")
         raise Exception
-    logging.debug(dict_pages)
-    logging.info("Parsing data from static assets...")
+    logger.debug(dict_pages)
+    logger.info("Parsing data from static assets...")
     try:
         dict_pages = parse_pages_from_dict(pages_dict=dict_pages)
-        logging.info("Data parsed. Proceeding...")
+        logger.info("Data parsed. Proceeding...")
     except Exception:
-        logging.critical("Error parsing classes data")
+        logger.critical("Error parsing classes data")
         raise Exception
     return dict_pages

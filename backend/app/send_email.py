@@ -1,6 +1,6 @@
-import logging
-
 from typing import Union
+from app.format_email_templates import load_templates
+from lib.logging_config import logger
 
 
 def get_yaml_vars_email(yaml_loc: str = None) -> dict:
@@ -10,16 +10,16 @@ def get_yaml_vars_email(yaml_loc: str = None) -> dict:
     import yaml
     if yaml_loc is None:
         yaml_loc = os.path.join(os.getcwd(), "assets", "config_vars.yml")
-        logging.debug(yaml_loc)
-    logging.debug(os.path.exists(path=yaml_loc))
+        logger.debug(yaml_loc)
+    logger.debug(os.path.exists(path=yaml_loc))
     if not os.path.exists(path=yaml_loc):
         raise Exception("No JSON file located")
     with open(file=yaml_loc, mode="r") as file:
         dict_yaml = yaml.safe_load(file)
-    logging.debug(dict_yaml)
+    logger.debug(dict_yaml)
     # pprint(dict_yaml)
     # pdb.set_trace()
-    logging.debug(dict_yaml[0].get("emails"))
+    logger.debug(dict_yaml[0].get("emails"))
     return dict_yaml[0].get("emails")
 
 
@@ -40,7 +40,7 @@ def build_email_message(data: dict) -> str:
         else:
             line_msg = f"> La clase {_dict.get('category')}, del {_dict.get('date_class')} hrs., no tiene cupos disponibles :(\n"
         line_msg += f"Esta es la página de la clase: {_dict.get('url')}"
-        logging.debug(line_msg)
+        logger.debug(line_msg)
         messages.append(line_msg)
     eol_msg = f"Revisé en esta fecha: {data[len(data)-1].get('check_time')}\n\nBesis! Bai!"
     messages.append(eol_msg)
@@ -48,9 +48,9 @@ def build_email_message(data: dict) -> str:
     # build message file path
     now_ts = datetime.strftime(datetime.now(), "%Y%m%d-%H%M%S")
     output_path = os.path.join(os.getcwd(), "output", f"{now_ts}-message.txt")
-    logging.debug(output_path)
+    logger.debug(output_path)
     # pprint(messages)
-    logging.debug(body_msg)
+    logger.debug(body_msg)
     # write message to text
     with open(file=output_path, mode="w") as msg:
         msg.write(body_msg)
@@ -62,13 +62,15 @@ def email_send(textfile_path: str, me: str, you: Union[list, str], password: str
     import smtplib
     from datetime import datetime
     from email.mime.text import MIMEText
-    logging.debug(f"TEST CONFIG :: me: {me} ; you: {you} ")
+    logger.debug(f"TEST CONFIG :: me: {me} ; you: {you} ")
     # pdb.set_trace()
     now_dt = datetime.strftime(datetime.now(), "%Y-%m-%d")
-    logging.info("Sending data over email...")
+    logger.info("Sending data over email...")
+    # TODO: refactor message contents
     # textfile is the message content file
     with open(textfile_path, "r") as fp:
         msg = MIMEText(fp.read(), "plain")
+    # TODO: end refactor piece
     msg["Subject"] = f"Clases y cupos, revisadas el {now_dt}"
     # me is sender email address
     # you is recipient email address
@@ -78,45 +80,47 @@ def email_send(textfile_path: str, me: str, you: Union[list, str], password: str
     elif isinstance(you, str):
         msg["To"] = you
     else:
-        logging.critical("Wrong type of recipient")
+        logger.critical("Wrong type of recipient")
         raise Exception
     # send email through smtp server
     with smtplib.SMTP_SSL(host="smtp.gmail.com", port=465) as s:
-        logging.info("Attempting email login...")
+        logger.info("Attempting email login...")
         s.login(user=me, password=password)
-        logging.info("Attempting to send email...")
+        logger.info("Attempting to send email...")
         if isinstance(you, list):
             s.sendmail(me, you, msg.as_string())
         elif isinstance(you, str):
             s.sendmail(me, [you], msg.as_string())
         else:
-            logging.critical("Wrong type of recipient")
+            logger.critical("Wrong type of recipient")
             raise Exception
     return None
 
 
 def email_process(data: dict, yaml_loc: str = None) -> None:
-    # import pdb
-    logging.info("Retrieving configurations for email send process...")
+    import pdb
+    logger.info("Retrieving configurations for email send process...")
     try:
         dict_config = get_yaml_vars_email(yaml_loc=None)
-        logging.info("Config done. Proceeding...")
+        logger.debug(load_templates(template_data=data))
+        logger.info("Config done. Proceeding...")
+        pdb.set_trace()
     except Exception:
-        logging.critical("Error while getting config vars for email process")
+        logger.critical("Error while getting config vars for email process")
         raise Exception
-    logging.info("Configuring email body message...")
+    logger.info("Configuring email body message...")
     try:
         path = build_email_message(data=data)
-        logging.info("Message set up. Proceeding...")
+        logger.info("Message set up. Proceeding...")
     except Exception:
-        logging.critical("Error configuring the message body")
+        logger.critical("Error configuring the message body")
         raise Exception
     # pdb.set_trace()
-    logging.info("Sending email...")
+    logger.info("Sending email...")
     try:
         email_send(textfile_path=path, me=dict_config["me"], you=dict_config["you"], password=dict_config["app_password"])
-        logging.info("Email sent. Proceeding...")
+        logger.info("Email sent. Proceeding...")
     except Exception:
-        logging.critical("Error sending email")
+        logger.critical("Error sending email")
         raise Exception
     return None
