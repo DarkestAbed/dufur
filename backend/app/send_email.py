@@ -24,6 +24,7 @@ def get_yaml_vars_email(yaml_loc: str = None) -> dict:
 
 
 def build_email_message(data: dict) -> str:
+    # NOTE: DEPRECATED
     import os
     from datetime import datetime
     # from pprint import pprint
@@ -57,7 +58,7 @@ def build_email_message(data: dict) -> str:
     return output_path
 
 
-def email_send(textfile_path: str, me: str, you: Union[list, str], password: str) -> None:
+def email_send(htmlfile_path: str, me: str, you: Union[list, str], password: str) -> None:
     # import pdb
     import smtplib
     from datetime import datetime
@@ -67,9 +68,9 @@ def email_send(textfile_path: str, me: str, you: Union[list, str], password: str
     now_dt = datetime.strftime(datetime.now(), "%Y-%m-%d")
     logger.info("Sending data over email...")
     # TODO: refactor message contents
-    # textfile is the message content file
-    with open(textfile_path, "r") as fp:
-        msg = MIMEText(fp.read(), "plain")
+    # hmtlfile is the email body
+    with open(htmlfile_path, "r") as fp:
+        msg = MIMEText(fp.read(), "html")
     # TODO: end refactor piece
     msg["Subject"] = f"Clases y cupos, revisadas el {now_dt}"
     # me is sender email address
@@ -102,15 +103,14 @@ def email_process(data: dict, yaml_loc: str = None) -> None:
     logger.info("Retrieving configurations for email send process...")
     try:
         dict_config = get_yaml_vars_email(yaml_loc=None)
-        logger.debug(load_templates(template_data=data))
         logger.info("Config done. Proceeding...")
-        pdb.set_trace()
+        # pdb.set_trace()
     except Exception:
         logger.critical("Error while getting config vars for email process")
         raise Exception
     logger.info("Configuring email body message...")
     try:
-        path = build_email_message(data=data)
+        path = load_templates(template_data=data)
         logger.info("Message set up. Proceeding...")
     except Exception:
         logger.critical("Error configuring the message body")
@@ -118,7 +118,7 @@ def email_process(data: dict, yaml_loc: str = None) -> None:
     # pdb.set_trace()
     logger.info("Sending email...")
     try:
-        email_send(textfile_path=path, me=dict_config["me"], you=dict_config["you"], password=dict_config["app_password"])
+        email_send(htmlfile_path=path, me=dict_config["me"], you=dict_config["you"], password=dict_config["app_password"])
         logger.info("Email sent. Proceeding...")
     except Exception:
         logger.critical("Error sending email")

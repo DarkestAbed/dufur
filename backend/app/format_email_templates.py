@@ -21,4 +21,4 @@ def load_templates(template_data: dict):
     # template output
     with open(file=output_loc, mode="w") as file:
         file.write(output)
-    return output
+    return output_loc
