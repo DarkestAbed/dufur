@@ -3,20 +3,26 @@
     <h1>Estas son las clases y su disponibilidad</h1>
     <table>
         <tr>
+            <th>id</th>
             <th>Clase</th>
             <th>Fecha</th>
             <th>Cupos disponibles</th>
+            <th>Link a la clase</th>
+            <th>Revisada en</th>
         </tr>
-        {% for row in data %}
-            {% for key, value in data.items() %}
-                <p>Key: {{key}}</p>
-                <p>Value: {{value}}</p>
-                <tr>
-                    <td>{{ value.category }}</td>
-                    <td>{{ row.date_class }}</td>
-                    <td>{{ row.availability }}</td>
-                </tr>
-            {% endfor %}
+        {% for key, value in data.items() %}
+            <tr>
+                <td>{{ key + 1 }}</td>
+                <td>{{ value.category }}</td>
+                <td>{{ value.date_class }}</td>
+                {% if value.availability == "Agotado" %}
+                    <td>La clase no tiene cupos &#128532</td>
+                {% else %}
+                    <td>{{ value.availability }}</td>
+                {% endif %}
+                <td><a href="{{ value.url }}" target="_blank" rel="noopener noreferrer">Inscríbete aquí</a></td>
+                <td>{{ value.check_time }}</td>
+            </tr>
         {% endfor %}
     </table>
 {% endblock %}
