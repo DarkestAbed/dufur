@@ -1,28 +1,77 @@
 {% extends "base.html" %}
+
+{% block head %}
+<style>
+    /* general table formatting */
+    table {
+        table-layout: fixed;
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        padding: 5px;
+    }
+
+    tr {
+        text-align: center;
+    }
+
+    /* zebra striping */
+    tbody tr:nth-child(odd) {
+        background-color: #ff33cc86;
+    }
+      
+    tbody tr:nth-child(even) {
+        background-color: #e4b6e4;
+    }
+      
+    thead tr {
+        background-color: #ffffff;
+    }
+
+    /* caption */
+    caption {
+        padding: 20px;
+        font-style: italic;
+        caption-side: bottom;
+        color: #666;
+        text-align: right;
+        letter-spacing: 1px;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
     <h1>Estas son las clases y su disponibilidad</h1>
     <table>
-        <tr>
-            <th>id</th>
-            <th>Clase</th>
-            <th>Fecha</th>
-            <th>Cupos disponibles</th>
-            <th>Link a la clase</th>
-            <th>Revisada en</th>
-        </tr>
-        {% for key, value in data.items() %}
+        <caption>Clases y cupos disponibles</caption>
+        <thead>
             <tr>
-                <td>{{ key + 1 }}</td>
-                <td>{{ value.category }}</td>
-                <td>{{ value.date_class }}</td>
-                {% if value.availability == "Agotado" %}
-                    <td>La clase no tiene cupos &#128532</td>
-                {% else %}
-                    <td>{{ value.availability }}</td>
-                {% endif %}
-                <td><a href="{{ value.url }}" target="_blank" rel="noopener noreferrer">Inscríbete aquí</a></td>
-                <td>{{ value.check_time }}</td>
+                <th>id</th>
+                <th>Clase</th>
+                <th>Fecha</th>
+                <th>Cupos disponibles</th>
+                <th>Link a la clase</th>
+                <th>Revisada en</th>
             </tr>
-        {% endfor %}
+        </thead>
+        <tbody>
+            {% for key, value in data.items() %}
+                <tr>
+                    <td>{{ key + 1 }}</td>
+                    <td>{{ value.category }}</td>
+                    <td>{{ value.date_class }}</td>
+                    {% if value.availability == "Agotado" %}
+                        <td>La clase no tiene cupos &#128532</td>
+                    {% else %}
+                        <td>{{ value.availability }}</td>
+                    {% endif %}
+                    <td><a href="{{ value.url }}" target="_blank" rel="noopener noreferrer">Inscríbete aquí</a></td>
+                    <td>{{ value.check_time }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
 {% endblock %}

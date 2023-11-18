@@ -6,4 +6,4 @@ output/*-data.json
 output/*-message.txt
 output/*-email_template.html
 *.pyc
-config_vars.yml
+config_vars*.yml

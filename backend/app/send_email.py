@@ -1,5 +1,7 @@
 from typing import Union
 from app.format_email_templates import load_templates
+from assets.config import RUN_ENV
+from lib.exceptions import WrongExecutionEnvironment
 from lib.logging_config import logger
 
 
@@ -9,7 +11,13 @@ def get_yaml_vars_email(yaml_loc: str = None) -> dict:
     # import pdb
     import yaml
     if yaml_loc is None:
-        yaml_loc = os.path.join(os.getcwd(), "assets", "config_vars.yml")
+        if RUN_ENV == "local":
+            CONFIG_FILE = "config_vars-dev.yml"
+        elif RUN_ENV == "remote":
+            CONFIG_FILE = "config_vars.yml"
+        else:
+            raise WrongExecutionEnvironment
+        yaml_loc = os.path.join(os.getcwd(), "assets", CONFIG_FILE)
         logger.debug(yaml_loc)
     logger.debug(os.path.exists(path=yaml_loc))
     if not os.path.exists(path=yaml_loc):
@@ -21,41 +29,6 @@ def get_yaml_vars_email(yaml_loc: str = None) -> dict:
     # pdb.set_trace()
     logger.debug(dict_yaml[0].get("emails"))
     return dict_yaml[0].get("emails")
-
-
-def build_email_message(data: dict) -> str:
-    # NOTE: DEPRECATED
-    import os
-    from datetime import datetime
-    # from pprint import pprint
-    # build message
-    # pprint(data)
-    messages = []
-    init_msg = "Hola! Acá van las disponibilidades de todas las clases de la academia Natalia Dufuur:\n\n"
-    messages.append(init_msg)
-    for idx in data:
-        # pprint(data[idx])
-        _dict = data[idx]
-        if not _dict.get("availability") == "Agotado":
-            line_msg = f"> La clase {_dict.get('category')}, del {_dict.get('date_class')} hrs., tiene estos cupos: {_dict.get('availability')}\n"
-        else:
-            line_msg = f"> La clase {_dict.get('category')}, del {_dict.get('date_class')} hrs., no tiene cupos disponibles :(\n"
-        line_msg += f"Esta es la página de la clase: {_dict.get('url')}"
-        logger.debug(line_msg)
-        messages.append(line_msg)
-    eol_msg = f"Revisé en esta fecha: {data[len(data)-1].get('check_time')}\n\nBesis! Bai!"
-    messages.append(eol_msg)
-    body_msg = "\n\n===\n\n".join(messages)
-    # build message file path
-    now_ts = datetime.strftime(datetime.now(), "%Y%m%d-%H%M%S")
-    output_path = os.path.join(os.getcwd(), "output", f"{now_ts}-message.txt")
-    logger.debug(output_path)
-    # pprint(messages)
-    logger.debug(body_msg)
-    # write message to text
-    with open(file=output_path, mode="w") as msg:
-        msg.write(body_msg)
-    return output_path
 
 
 def email_send(htmlfile_path: str, me: str, you: Union[list, str], password: str) -> None:

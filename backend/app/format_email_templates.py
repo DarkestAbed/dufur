@@ -1,9 +1,9 @@
 import os
 
-from jinja2 import Environment, FileSystemLoader
-from lib.logging_config import logger
-from assets.config import DATE_FMT
 from datetime import datetime
+from jinja2 import Environment, FileSystemLoader
+from assets.config import DATE_FMT
+from lib.logging_config import logger
 
 def load_templates(template_data: dict):
     # setup
