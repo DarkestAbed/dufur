@@ -1,14 +1,14 @@
 from app.parse_pages import retrieve_page
 from app.load_html import load_html_page, fetch_stock_item
 from app.parse_dates import get_day_time_of_class
+from assets.config import TIMESTAMP_FMT
 from lib.logging_config import logger
 
 
 def store_data_in_dict(page: dict, availability: str) -> dict:
     from datetime import datetime
     # from pprint import pprint
-    now_fmt = "%Y-%m-%d %H:%M:%S.%f"
-    now_ts = datetime.strftime(datetime.now(), now_fmt)
+    now_ts = datetime.strftime(datetime.now(), TIMESTAMP_FMT)
     logger.debug(now_ts)
     date_class = get_day_time_of_class(url=page[1])
     inside_dict = {

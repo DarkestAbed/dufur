@@ -1,34 +1,7 @@
 from typing import Union
 from app.format_email_templates import load_templates
-from assets.config import RUN_ENV
-from lib.exceptions import WrongExecutionEnvironment
+from lib.load_env_vars import load_vars
 from lib.logging_config import logger
-
-
-def get_yaml_vars_email(yaml_loc: str = None) -> dict:
-    # from pprint import pprint
-    import os
-    # import pdb
-    import yaml
-    if yaml_loc is None:
-        if RUN_ENV == "local":
-            CONFIG_FILE = "config_vars-dev.yml"
-        elif RUN_ENV == "remote":
-            CONFIG_FILE = "config_vars.yml"
-        else:
-            raise WrongExecutionEnvironment
-        yaml_loc = os.path.join(os.getcwd(), "assets", CONFIG_FILE)
-        logger.debug(yaml_loc)
-    logger.debug(os.path.exists(path=yaml_loc))
-    if not os.path.exists(path=yaml_loc):
-        raise Exception("No JSON file located")
-    with open(file=yaml_loc, mode="r") as file:
-        dict_yaml = yaml.safe_load(file)
-    logger.debug(dict_yaml)
-    # pprint(dict_yaml)
-    # pdb.set_trace()
-    logger.debug(dict_yaml[0].get("emails"))
-    return dict_yaml[0].get("emails")
 
 
 def email_send(htmlfile_path: str, me: str, you: Union[list, str], password: str) -> None:
@@ -71,16 +44,16 @@ def email_send(htmlfile_path: str, me: str, you: Union[list, str], password: str
     return None
 
 
-def email_process(data: dict, yaml_loc: str = None) -> None:
-    import pdb
-    logger.info("Retrieving configurations for email send process...")
-    try:
-        dict_config = get_yaml_vars_email(yaml_loc=None)
-        logger.info("Config done. Proceeding...")
-        # pdb.set_trace()
-    except Exception:
-        logger.critical("Error while getting config vars for email process")
-        raise Exception
+def email_process(data: dict, dict_config: dict) -> None:
+    # import pdb
+    # logger.info("Retrieving configurations for email send process...")
+    # try:
+    #     dict_config = load_vars(yaml_loc=None)
+    #     logger.info("Config done. Proceeding...")
+    #     # pdb.set_trace()
+    # except Exception:
+    #     logger.critical("Error while getting config vars for email process")
+    #     raise Exception
     logger.info("Configuring email body message...")
     try:
         path = load_templates(template_data=data)
