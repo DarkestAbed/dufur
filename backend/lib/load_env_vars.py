@@ -2,7 +2,6 @@ import os
 import yaml
 
 from lib.exceptions import WrongExecutionEnvironment
-from lib.logging_config import logger
 
 
 def get_yaml_vars_email(env: str) -> dict:

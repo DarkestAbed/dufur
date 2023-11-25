@@ -1,5 +1,4 @@
 from lib.load_env_vars import load_vars
-from lib.logging_config import logger
 
 
 def app_config() -> tuple:
