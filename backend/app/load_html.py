@@ -1,7 +1,9 @@
 import requests
 
 from bs4 import BeautifulSoup
-from lib.logging_config import logger
+from lib.logger import Logger
+
+logger = Logger()
 
 
 def load_html_page(url_loc: str) -> BeautifulSoup:

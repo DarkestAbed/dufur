@@ -2,7 +2,9 @@ from app.parse_pages import retrieve_page
 from app.load_html import load_html_page, fetch_stock_item
 from app.parse_dates import get_day_time_of_class
 from assets.config import TIMESTAMP_FMT
-from lib.logging_config import logger
+from lib.logger import Logger
+
+logger = Logger()
 
 
 def store_data_in_dict(page: dict, availability: str) -> dict:

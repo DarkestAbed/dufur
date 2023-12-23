@@ -5,8 +5,17 @@ from datetime import datetime
 from assets.config import LOGGING_LEVEL_LOGGER, LOGGING_LEVEL_CONSOLE, LOGGING_LEVEL_FILE, LOGGING_FORMAT, DATETIME_FMT
 
 
-# NOTE: refactor of the logger method
-class logger:
+class Singleton(type):
+    _instances = {}
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
+        else:
+            cls._instances[cls].__init__(*args, **kwargs)
+        return cls._instances[cls]
+
+
+class Logger(metaclass=Singleton):
     def __init__(self) -> None:
         date = datetime.strftime(datetime.now(), DATETIME_FMT)
         self.logger = logging.getLogger("output")
@@ -24,8 +33,8 @@ class logger:
         self.console_log.setFormatter(formatter)
         self.file_log.setFormatter(formatter)
         ## add logs to handler
-        logger.addHandler(self.console_log)
-        logger.addHandler(self.file_log)
+        self.logger.addHandler(self.console_log)
+        self.logger.addHandler(self.file_log)
         return None
 
     def debug(self, msg: str) -> None:

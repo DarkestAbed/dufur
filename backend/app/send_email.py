@@ -1,7 +1,8 @@
 from typing import Union
 from app.format_email_templates import load_templates
-from lib.load_env_vars import load_vars
-from lib.logging_config import logger
+from lib.logger import Logger
+
+logger = Logger()
 
 
 def email_send(htmlfile_path: str, me: str, you: Union[list, str], password: str) -> None:

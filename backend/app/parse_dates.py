@@ -1,4 +1,6 @@
-from lib.logging_config import logger
+from lib.logger import Logger
+
+logger = Logger()
 
 
 def find_occurrences(s, ch):

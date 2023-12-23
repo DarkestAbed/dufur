@@ -1,7 +1,9 @@
 import json
 import os
 
-from lib.logging_config import logger
+from lib.logger import Logger
+
+logger = Logger()
 
 
 def get_pages_from_json(pages_loc: str = None) -> dict:

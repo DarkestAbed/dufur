@@ -1,5 +1,6 @@
 # folders
 __pycache__/
+venv/
 # files
 output/*.log
 output/*-data.json

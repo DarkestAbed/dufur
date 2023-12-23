@@ -3,7 +3,10 @@ import os
 from datetime import datetime
 from jinja2 import Environment, FileSystemLoader
 from assets.config import DATE_FMT
-from lib.logging_config import logger
+from lib.logger import Logger
+
+logger = Logger()
+
 
 def load_templates(template_data: dict):
     # setup

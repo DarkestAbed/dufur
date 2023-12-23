@@ -1,8 +1,8 @@
 from logging import INFO, DEBUG
 
 # logginf
-LOGGING_FORMAT = "%(asctime)s :: %(levelname)s :: %(message)s"
-LOGGING_LEVEL_CONSOLE = INFO
+LOGGING_FORMAT = "%(asctime)s || %(filename)s::%(module)s - %(funcName)s || %(process)d::%(processName)s :: %(levelname)s :: %(message)s"
+LOGGING_LEVEL_CONSOLE = DEBUG
 LOGGING_LEVEL_FILE = DEBUG
 LOGGING_LEVEL_LOGGER = DEBUG
 # formats
