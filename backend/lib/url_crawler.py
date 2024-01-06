@@ -14,7 +14,8 @@ class Crawler:
         self.urls_to_visit = urls
 
     def download_url(self, url):
-        return requests.get(url).text
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36'}
+        return requests.get(url=url, headers=headers).text
 
     def get_linked_urls(self, url, html):
         soup = BeautifulSoup(html, "html.parser")
@@ -25,13 +26,17 @@ class Crawler:
             yield path
 
     def add_url_to_visit(self, url):
-        if url not in self.visited_urls and url not in self.urls_to_visit:
-            logger.debug(f"Appending URL {url}")
-            self.urls_to_visit.append(url)
+        # logger.debug(url)
+        if url is None:
+            return None
+        if url not in self.visited_urls and url not in self.urls_to_visit and "https" in url:
+            if "product/" in url:
+                logger.info(f"Appending 'product/' URL: {url}")
+                self.urls_to_visit.append(url)
 
     def crawl(self, url):
         html = self.download_url(url)
-        logger.debug(html)
+        # logger.debug(html)
         for url in self.get_linked_urls(url, html):
             self.add_url_to_visit(url)
 

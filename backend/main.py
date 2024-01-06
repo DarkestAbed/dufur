@@ -1,4 +1,5 @@
 from app.app_config import app_config
+from app.check_available_classes import class_check_orchestrator
 from app.parse_pages import parse_pages
 from app.store_data import store_process
 from app.send_email import email_process
@@ -7,9 +8,9 @@ from app.send_email import email_process
 def main():
     import pdb
     from pprint import pprint
-    # check_classes_test()
-    # pdb.set_trace()
     _, email_vars = app_config()
+    class_check_orchestrator()
+    pdb.set_trace()
     dict_pages = parse_pages(pages_loc=None)
     pprint(dict_pages)
     # pdb.set_trace()
