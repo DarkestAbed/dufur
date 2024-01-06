@@ -30,7 +30,7 @@ def parse_pages_from_dict(pages_dict: dict) -> dict:
             for page in item:
                 logger.debug(f"{key}: {base_url}/{page}")
                 new_dict[idx] = {
-                    "category": key,
+                    "day_of_week": key,
                     "base_page": page,
                     "full_page": f"{base_url}/{page}",
                 }
@@ -43,7 +43,7 @@ def parse_pages_from_dict(pages_dict: dict) -> dict:
 
 
 def retrieve_page(pages_dict: dict, idx: int) -> str:
-    return (pages_dict[idx]["category"], pages_dict[idx]["full_page"])
+    return (pages_dict[idx]["day_of_week"], pages_dict[idx]["full_page"])
 
 
 def parse_pages(pages_loc: str = None) -> dict:

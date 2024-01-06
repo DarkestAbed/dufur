@@ -23,10 +23,17 @@ def load_html_page(url_loc: str) -> BeautifulSoup:
 
 
 def fetch_stock_item(soup: BeautifulSoup) -> str:
-    logger.debug(soup.find("div", "products-area"))
+    # logger.debug(soup.find("div", "products-area"))
     head_tag = soup.find("div", "products-area")
-    logger.debug(head_tag.name)
-    logger.debug(head_tag.contents)
+    # logger.debug(head_tag.name)
+    # logger.debug(head_tag.contents)
     cupos = head_tag.find("p", "stock").contents[0]
     logger.debug(cupos)
     return cupos
+
+
+def fetch_class_name(soup: BeautifulSoup) -> str:
+    title_tag = soup.find("div", "products-details")
+    nombre_clase = title_tag.find("h3", "product_title").contents[0]
+    logger.debug(nombre_clase)
+    return nombre_clase

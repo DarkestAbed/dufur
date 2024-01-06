@@ -1,20 +1,25 @@
 from app.parse_pages import retrieve_page
-from app.load_html import load_html_page, fetch_stock_item
-from app.parse_dates import get_day_time_of_class
+from app.load_html import load_html_page, fetch_stock_item, fetch_class_name
+from app.parse_values import get_day_time_of_class, get_class_title
 from assets.config import TIMESTAMP_FMT
 from lib.logger import Logger
 
 logger = Logger()
 
 
-def store_data_in_dict(page: dict, availability: str) -> dict:
+def store_data_in_dict(page: dict, class_title: str, availability: str) -> dict:
+    import pdb
     from datetime import datetime
     # from pprint import pprint
     now_ts = datetime.strftime(datetime.now(), TIMESTAMP_FMT)
     logger.debug(now_ts)
+    title_class = get_class_title(text=class_title)
+    logger.debug(title_class)
     date_class = get_day_time_of_class(url=page[1])
+    logger.debug(date_class)
+    # pdb.set_trace()
     inside_dict = {
-        "category": page[0],
+        "category": title_class.title(),
         "url": page[1],
         "date_class": date_class,
         "availability": availability,
@@ -25,23 +30,30 @@ def store_data_in_dict(page: dict, availability: str) -> dict:
 
 
 def store_all_data(pages: dict) -> dict:
+    import pdb
     # from pprint import pprint
     logger.debug(pages)
+    # pdb.set_trace()
     full_dict = {}
     for index in range(0, len(pages)):
         page = retrieve_page(pages_dict=pages, idx=index)
-        logger.debug(page)
+        # logger.debug(page)
+        # pdb.set_trace()
         logger.debug(f"{index + 1} : {page}")
+        # pdb.set_trace()
         try:
             soup = load_html_page(page)
         except Exception as e:
             msg = f"Encontramos un error al buscar las clases, para la clase {page[0]}, URL {page[1]}"
             logger.error(msg=msg)
             next
+        clase = fetch_class_name(soup=soup)
         cupos_disponibles = fetch_stock_item(soup=soup)
-        temp_data = store_data_in_dict(page=page, availability=cupos_disponibles)
+        # pdb.set_trace()
+        temp_data = store_data_in_dict(page=page, class_title=clase, availability=cupos_disponibles)
         logger.debug(f"Cupos disponibles? : {temp_data.get('category')} ({temp_data.get('date_class')}) :: {temp_data.get('availability')}")
         full_dict[index] = temp_data
+        # pdb.set_trace()
     # pprint(full_dict)
     return full_dict
 

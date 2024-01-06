@@ -1,42 +1,35 @@
 {
-    "sexy_strip": [
+    "lunes": [
         "lunes-1830-hrs-sexy-strip/",
-        "martes-1700-hrs-sexy-strip/",
-        "viernes-1940-sexy-strip/",
-        "sabado-10-00-hrs-sexy-strip/"
-    ],
-    "rock_my_chair": [
         "lunes-1940-hrs-rock-my-chair/",
-        "martes-2045-hrs-chair-dance/",
-        "sabado-1230-hrs-chair-dance/"
+        "lunes-20-45-hrs-diva/"
     ],
-    "femme": [
-        "lunes-20-45-hrs-femme/",
-        "martes-1940-hrs-femme/",
-        "miercoles-2045-hrs-femme/",
-        "jueves-1700-hrs-femme/",
-        "sabado-11-15-hrs-femme/"
-    ],
-    "sensual_chair": [
+    "martes": [
+        "martes-1700-hrs-diosa-latina/",
         "martes-1830-hrs-sensual-chair/",
-        "jueves-1940-hrs-sensual-chair/",
-        "viernes-17-00-hrs-sensual-chair/"
+        "martes-1940-hrs-femme/",
+        "martes-2045-hrs-chair-dance/"
     ],
-    "diva_burlesque": [
+    "miercoles": [
         "miercoles-18-30-hrs-diva-burlesque/",
+        "miercoles-1940-hrs-diosa-latina/",
+        "miercoles-2045-hrs-femme/"
+    ],
+    "jueves": [
+        "jueves-1700-hrs-femme/",
+        "jueves-1830-hrs-diosa-latina/",
+        "jueves-1940-hrs-sensual-chair/",
         "jueves-20-45-hrs-diva/"
     ],
-    "diosa_latina": [
-        "lunes-17-00-hrs-diosa-latina/",
-        "miercoles-1940-hrs-diosa-latina/",
-        "jueves-1830-hrs-diosa-latina/",
+    "viernes": [
+        "viernes-17-00-hrs-sensual-chair/",
         "viernes-1830-hrs-diosa-latina/",
+        "viernes-1940-diva/"
+    ],
+    "sabado": [
+        "sabado-10-00-hrs-sensual-chair/",
+        "sabado-11-15-hrs-femme/",
+        "sabado-1230-hrs-chair-dance/",
         "sabado-16-15hrs-diosa-latina/"
-    ],
-    "bienvenida_al_olimpo": [
-        "sabado-1500-hrs-bienvenida/"
-    ],
-    "tecnica_avanzada": [
-        "sabado-17-30-avanzado/"
     ]
 }

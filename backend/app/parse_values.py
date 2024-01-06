@@ -15,11 +15,19 @@ def get_day_time_of_class(url: str) -> str:
     # get the second index of a dash on the url string
     idxs_dashes = find_occurrences(s=url, ch="-")
     idxs_slashes = find_occurrences(s=url, ch="/")
+    logger.debug(f"url: {url} ; dashes: {idxs_dashes} ; slashes: {idxs_slashes}")
     ## date_class_raw provides ddd-hhmm ; if provides ddd-hh, something must be done
-    date_class_raw_opt_1 = url[idxs_slashes[3] + 1:idxs_dashes[1]]
-    date_class_raw_opt_2 = url[idxs_slashes[3] + 1:idxs_dashes[2]]
+    try:
+        date_class_raw_opt_1 = url[idxs_slashes[3] + 1:idxs_dashes[1]]
+    except IndexError:
+        date_class_raw_opt_1 = None
     logger.debug(date_class_raw_opt_1)
+    try:
+        date_class_raw_opt_2 = url[idxs_slashes[3] + 1:idxs_dashes[2]]
+    except IndexError:
+        date_class_raw_opt_2 = date_class_raw_opt_1
     logger.debug(date_class_raw_opt_2)
+    # trying something...
     date_class_split = date_class_raw_opt_1.split("-")
     logger.debug(date_class_split)
     date_class = date_class_split[0]
@@ -36,3 +44,23 @@ def get_day_time_of_class(url: str) -> str:
         raise Exception("Error fetching day and time of class")
     logger.debug(f"{date_class} {time_class}")
     return f"{date_class} {time_class}"
+
+
+def get_class_title(text: str) -> str:
+    import pdb
+    # strip the string of dots and colons. it'll be easier this way
+    text_clean = text.replace(".", "").replace(":", "").lower()
+    logger.debug(f"Probando texto: {text_clean}")
+    # find the index of string "hrs"
+    idx_hrs = text_clean.find("hrs")
+    logger.debug(idx_hrs)
+    logger.debug(text_clean[idx_hrs + 3:].strip())
+    # pdb.set_trace()
+    if idx_hrs > 0:
+        class_title = text_clean[idx_hrs + 3:].strip()
+    else:
+        import re
+        re_digits = re.search(r"\d", text_clean)
+        idx_hrs = re_digits.start()
+        class_title = text_clean[idx_hrs + 4:].strip()
+    return class_title
