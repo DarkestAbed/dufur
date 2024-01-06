@@ -1,4 +1,7 @@
+import os
+
 from logging import INFO, DEBUG
+
 
 # logginf
 LOGGING_FORMAT = "%(asctime)s || %(filename)s::%(module)s - %(funcName)s || %(process)d::%(processName)s :: %(levelname)s :: %(message)s"
@@ -11,3 +14,6 @@ TIMESTAMP_FMT = "%Y-%m-%d %H:%M:%S"
 DATE_FMT = "%Y%m%d"
 # envs
 RUN_ENV = "dev"
+# physical routes
+COURSES_JSON = os.path.join(os.getcwd(), "assets", "cursos.json")
+BASE_URL = "https://nataliadufuur.com/clases-presenciales/"

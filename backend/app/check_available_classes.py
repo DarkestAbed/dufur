@@ -1,5 +1,6 @@
 from lib.url_crawler import Crawler
 from lib.logger import Logger
+from assets.config import BASE_URL, COURSES_JSON
 
 logger = Logger()
 
@@ -7,8 +8,7 @@ logger = Logger()
 def retrieve_all_product_links() -> list:
     # import pdb
     # from pprint import pprint
-    base_url = "https://nataliadufuur.com/clases-presenciales/"
-    crawler = Crawler(urls=[base_url])
+    crawler = Crawler(urls=[BASE_URL])
     crawler.run()
     urls = crawler.yield_urls()
     # for url in urls:
@@ -67,6 +67,13 @@ def create_new_class_json_file(valid_prods: list) -> dict:
     return dict_return
 
 
+def save_classes_to_json(courses_dict: dict) -> None:
+    import json
+    with open(file=COURSES_JSON, mode="w") as f:
+        json.dump(obj=courses_dict, fp=f)
+    return None
+
+
 def class_check_orchestrator() -> None:
     import pdb
     from pprint import pprint
@@ -75,5 +82,6 @@ def class_check_orchestrator() -> None:
     pprint(valid_products)
     new_json = create_new_class_json_file(valid_prods=valid_products)
     pprint(new_json)
-    pdb.set_trace()
+    save_classes_to_json(courses_dict=new_json)
+    # pdb.set_trace()
     return None
