@@ -12,13 +12,11 @@ def email_send(htmlfile_path: str, me: str, you: Union[list, str], password: str
     from email.mime.text import MIMEText
     logger.debug(f"TEST CONFIG :: me: {me} ; you: {you} ")
     # pdb.set_trace()
-    now_dt = datetime.strftime(datetime.now(), "%Y-%m-%d")
+    now_dt: str = datetime.strftime(datetime.now(), "%Y-%m-%d")
     logger.info("Sending data over email...")
-    # TODO: refactor message contents
     # hmtlfile is the email body
     with open(htmlfile_path, "r") as fp:
-        msg = MIMEText(fp.read(), "html")
-    # TODO: end refactor piece
+        msg: MIMEText = MIMEText(fp.read(), "html")
     msg["Subject"] = f"Clases y cupos, revisadas el {now_dt}"
     # me is sender email address
     # you is recipient email address

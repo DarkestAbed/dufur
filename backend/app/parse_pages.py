@@ -28,11 +28,12 @@ def parse_pages_from_dict(pages_dict: dict) -> dict:
     for key, item in pages_dict.items():
         if isinstance(item, list):
             for page in item:
-                logger.debug(f"{key}: {base_url}/{page}")
+                full_page: str = f"{base_url}/{page}" if "nataliadufuur" not in page else f"{page}"
+                logger.debug(f"{key}: {full_page}")
                 new_dict[idx] = {
                     "day_of_week": key,
                     "base_page": page,
-                    "full_page": f"{base_url}/{page}",
+                    "full_page": full_page,
                 }
                 idx += 1
         else:

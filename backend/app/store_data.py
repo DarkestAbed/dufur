@@ -34,7 +34,7 @@ def store_all_data(pages: dict) -> dict:
     # from pprint import pprint
     logger.debug(pages)
     # pdb.set_trace()
-    full_dict = {}
+    full_dict: dict = {}
     for index in range(0, len(pages)):
         page = retrieve_page(pages_dict=pages, idx=index)
         # logger.debug(page)
@@ -75,7 +75,7 @@ def store_process(pages: dict, store_to_disk: bool = True) -> dict:
     from datetime import datetime
     logger.info("Fetching data from web sources...")
     now_ts = datetime.strftime(datetime.now(), "%Y%m%d-%H%M%S")
-    output_path = os.path.join("/home", "javi", "Projects", "products",  "dufur", "backend", "output", f"{now_ts}-data.json")
+    output_path = os.path.join("/home", "javi", "Projects", "dufur", "backend", "output", f"{now_ts}-data.json")
     logger.debug(output_path)
     # pdb.set_trace()
     try:
