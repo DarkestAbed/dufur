@@ -1,6 +1,7 @@
 from typing import Union
-from app.format_email_templates import load_templates
-from lib.logger import Logger
+
+from backend.app.format_email_templates import load_templates
+from backend.lib.logger import Logger
 
 logger = Logger()
 

@@ -1,8 +1,8 @@
 import os
 import yaml
 
-from lib.exceptions import WrongExecutionEnvironment
-from lib.logger import Logger
+from backend.lib.exceptions import WrongExecutionEnvironment
+from backend.lib.logger import Logger
 
 logger = Logger()
 
@@ -31,10 +31,10 @@ def get_yaml_vars_email(env: str) -> dict:
 def get_yaml_vars_exec(yaml_loc: str = None) -> dict:
     # import pdb
     # from pprint import pprint
-    from assets.config import RUN_ENV
+    from backend.assets.config import RUN_ENV
     if yaml_loc is None:
         CONFIG_FILE = "config_vars-exec.yml"
-        yaml_loc = os.path.join(os.getcwd(), "assets", CONFIG_FILE)
+        yaml_loc = os.path.join(os.getcwd(), "backend", "assets", CONFIG_FILE)
         logger.debug(yaml_loc)
     logger.debug(os.path.exists(path=yaml_loc))
     if not os.path.exists(path=yaml_loc):

@@ -2,7 +2,8 @@ import logging
 import os
 
 from datetime import datetime
-from assets.config import LOGGING_LEVEL_LOGGER, LOGGING_LEVEL_CONSOLE, LOGGING_LEVEL_FILE, LOGGING_FORMAT, DATETIME_FMT
+
+from backend.assets.config import LOGGING_LEVEL_LOGGER, LOGGING_LEVEL_CONSOLE, LOGGING_LEVEL_FILE, LOGGING_FORMAT, DATETIME_FMT
 
 
 class Singleton(type):
@@ -23,7 +24,7 @@ class Logger(metaclass=Singleton):
         ## console logger
         self.console_log = logging.StreamHandler()
         ## file logger
-        log_path = os.path.join(os.getcwd(), "output", f"{date}-execution.log")
+        log_path = os.path.join(os.getcwd(), "backend", "output", f"{date}-execution.log")
         self.file_log = logging.FileHandler(filename=log_path, mode="w", encoding="latin-1", delay=False)
         ## set levels
         self.logger.setLevel(LOGGING_LEVEL_LOGGER)

@@ -1,6 +1,6 @@
-from lib.url_crawler import Crawler
-from lib.logger import Logger
-from assets.config import BASE_URL, COURSES_JSON
+from backend.lib.url_crawler import Crawler
+from backend.lib.logger import Logger
+from backend.assets.config import BASE_URL, COURSES_JSON
 
 logger = Logger()
 

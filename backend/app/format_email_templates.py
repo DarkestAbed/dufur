@@ -2,8 +2,9 @@ import os
 
 from datetime import datetime
 from jinja2 import Environment, FileSystemLoader
-from assets.config import DATE_FMT
-from lib.logger import Logger
+
+from backend.assets.config import DATE_FMT
+from backend.lib.logger import Logger
 
 logger = Logger()
 
@@ -11,8 +12,8 @@ logger = Logger()
 def load_templates(template_data: dict):
     # setup
     date_dt = datetime.strftime(datetime.now(), DATE_FMT)
-    templates_loc = os.path.join(os.getcwd(), "templates")
-    output_loc = os.path.join(os.getcwd(), "output", f"{date_dt}-email_template.html")
+    templates_loc = os.path.join(os.getcwd(), "backend", "templates")
+    output_loc = os.path.join(os.getcwd(), "backend", "output", f"{date_dt}-email_template.html")
     logger.debug(templates_loc)
     env = Environment(loader=FileSystemLoader(templates_loc))
     # template parsing

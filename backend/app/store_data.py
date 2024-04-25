@@ -1,8 +1,8 @@
-from app.parse_pages import retrieve_page
-from app.load_html import load_html_page, fetch_stock_item, fetch_class_name
-from app.parse_values import get_day_time_of_class, get_class_title
-from assets.config import TIMESTAMP_FMT
-from lib.logger import Logger
+from backend.app.parse_pages import retrieve_page
+from backend.app.load_html import load_html_page, fetch_stock_item, fetch_class_name
+from backend.app.parse_values import get_day_time_of_class, get_class_title
+from backend.assets.config import TIMESTAMP_FMT
+from backend.lib.logger import Logger
 
 logger = Logger()
 

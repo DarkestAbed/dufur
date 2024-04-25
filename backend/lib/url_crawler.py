@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 
-from lib.logger import Logger
+from backend.lib.logger import Logger
 
 logger = Logger()
 

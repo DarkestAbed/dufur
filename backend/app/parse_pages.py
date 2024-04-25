@@ -1,7 +1,7 @@
 import json
 import os
 
-from lib.logger import Logger
+from backend.lib.logger import Logger
 
 logger = Logger()
 
@@ -9,7 +9,7 @@ logger = Logger()
 def get_pages_from_json(pages_loc: str = None) -> dict:
     # from pprint import pprint
     if pages_loc is None:
-        pages_loc = os.path.join(os.getcwd(), "assets", "cursos.json")
+        pages_loc = os.path.join(os.getcwd(), "backend", "assets", "cursos.json")
         logger.debug(pages_loc)
     logger.debug(os.path.exists(path=pages_loc))
     if not os.path.exists(path=pages_loc):

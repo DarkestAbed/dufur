@@ -15,5 +15,5 @@ DATE_FMT = "%Y%m%d"
 # envs
 RUN_ENV = "dev"
 # physical routes
-COURSES_JSON = os.path.join(os.getcwd(), "assets", "cursos.json")
+COURSES_JSON = os.path.join(os.getcwd(), "backend", "assets", "cursos.json")
 BASE_URL = "https://nataliadufuur.com/clases-presenciales/"

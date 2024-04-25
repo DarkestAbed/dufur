@@ -1,16 +1,17 @@
-from lib.load_env_vars import load_vars
-from lib.logger import Logger
+from backend.lib.load_env_vars import load_vars
+from backend.lib.logger import Logger
 
 logger = Logger()
 
 
 def app_config() -> tuple:
-    import pdb
+    # import pdb
     from os import environ
     logger.info("Setting up the app...")
     # check if doppler vars exist
     doppler_config: str = environ.get("DOPPLER_CONFIG", None)
     if doppler_config:
+        logger.info("Loading env vars from Doppler...")
         logger.debug(f"{doppler_config = }")
         exec_vars: str = environ.get("DOPPLER_ENVIRONMENT", None)
         email_vars: dict[str, str] = {
@@ -19,6 +20,7 @@ def app_config() -> tuple:
             "app_password": environ.get("EMAILS_APP_PASSWORD", None),
         }
     else:
+        logger.warning("Loading env vars from file...")
         # load env variables
         env_dict: dict[str, str] = load_vars(yaml_loc=None)
         # define two var sets: exec and email
