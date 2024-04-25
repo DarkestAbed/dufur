@@ -1,11 +1,13 @@
+# backend/lib/url_crawler.py
 import requests
 
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 
-from backend.lib.logger import Logger
+from backend.assets.config import LOGGING_LEVEL_CONSOLE
+from shared.logger import Logger
 
-logger = Logger()
+logger: Logger = Logger(console_log_level=LOGGING_LEVEL_CONSOLE)
 
 
 class Crawler:
@@ -26,17 +28,17 @@ class Crawler:
             yield path
 
     def add_url_to_visit(self, url):
-        # logger.debug(url)
+        # logger.logger.debug(url)
         if url is None:
             return None
         if url not in self.visited_urls and url not in self.urls_to_visit and "https" in url:
             if "product/" in url:
-                logger.info(f"Appending 'product/' URL: {url}")
+                logger.logger.info(f"Appending 'product/' URL: {url}")
                 self.urls_to_visit.append(url)
 
     def crawl(self, url):
         html = self.download_url(url)
-        # logger.debug(html)
+        # logger.logger.debug(html)
         for url in self.get_linked_urls(url, html):
             self.add_url_to_visit(url)
 
@@ -46,10 +48,10 @@ class Crawler:
     def run(self):
         while self.urls_to_visit:
             url = self.urls_to_visit.pop(0)
-            logger.info(f"Crawling: {url}")
+            logger.logger.info(f"Crawling: {url}")
             try:
                 self.crawl(url)
             except Exception:
-                logger.exception(f"Failed to crawl: {url}")
+                logger.logger.exception(f"Failed to crawl: {url}")
             finally:
                 self.visited_urls.append(url)
