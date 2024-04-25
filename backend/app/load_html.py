@@ -1,19 +1,21 @@
+# backend/app/load_html.py
 import requests
 
 from bs4 import BeautifulSoup
 
-from backend.lib.logger import Logger
+from backend.assets.config import LOGGING_LEVEL_CONSOLE
+from shared.logger import Logger
 
-logger = Logger()
+logger: Logger = Logger(console_log_level=LOGGING_LEVEL_CONSOLE)
 
 
 def load_html_page(url_loc: str) -> BeautifulSoup:
     # from pprint import pprint
-    logger.debug(url_loc[1])
+    logger.logger.debug(url_loc[1])
     url_to_request = url_loc[1]
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36'}
     url_request = requests.get(url=url_to_request, headers=headers)
-    logger.debug(f"REQUESTS status code: {url_request.status_code}")
+    logger.logger.debug(f"REQUESTS status code: {url_request.status_code}")
     if url_request.status_code != 200:
         raise Exception("Error retrieving source code")
     url_data = url_request.content
@@ -24,17 +26,17 @@ def load_html_page(url_loc: str) -> BeautifulSoup:
 
 
 def fetch_stock_item(soup: BeautifulSoup) -> str:
-    # logger.debug(soup.find("div", "products-area"))
+    # logger.logger.debug(soup.find("div", "products-area"))
     head_tag = soup.find("div", "products-area")
-    # logger.debug(head_tag.name)
-    # logger.debug(head_tag.contents)
+    # logger.logger.debug(head_tag.name)
+    # logger.logger.debug(head_tag.contents)
     cupos = head_tag.find("p", "stock").contents[0]
-    logger.debug(cupos)
+    logger.logger.debug(cupos)
     return cupos
 
 
 def fetch_class_name(soup: BeautifulSoup) -> str:
     title_tag = soup.find("div", "products-details")
     nombre_clase = title_tag.find("h3", "product_title").contents[0]
-    logger.debug(nombre_clase)
+    logger.logger.debug(nombre_clase)
     return nombre_clase

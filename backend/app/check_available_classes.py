@@ -1,8 +1,9 @@
+# backend/app/check_available_classes.py
 from backend.lib.url_crawler import Crawler
-from backend.lib.logger import Logger
-from backend.assets.config import BASE_URL, COURSES_JSON
+from backend.assets.config import BASE_URL, COURSES_JSON, LOGGING_LEVEL_CONSOLE
+from shared.logger import Logger
 
-logger = Logger()
+logger: Logger = Logger(console_log_level=LOGGING_LEVEL_CONSOLE)
 
 
 def retrieve_all_product_links() -> list:
@@ -24,17 +25,17 @@ def validate_product_links(prod_list: list) -> list:
     list_return = []
     for product in prod_list:
         text_unparsed = product.strip()
-        logger.debug(f"Text to parse: {product}")
+        logger.logger.debug(f"Text to parse: {product}")
         if text_unparsed[-1] == "/":
             text_split = text_unparsed.split("/")[-2]
         else:
             text_split = text_unparsed.split("/")[-1]
-        logger.debug(f"Last piece of URL: {text_split}")
+        logger.logger.debug(f"Last piece of URL: {text_split}")
         text_split = text_split.split("-")[0]
-        logger.debug(f"First piece of text: {text_split}")
+        logger.logger.debug(f"First piece of text: {text_split}")
         # pdb.set_trace()
         if text_split in valid_days:
-            logger.debug("Valid class URL!")
+            logger.logger.debug("Valid class URL!")
             list_return.append(product)
     return list_return
 
@@ -49,21 +50,21 @@ def create_new_class_json_file(valid_prods: list) -> dict:
         "sabado": [],
     }
     for prod in valid_prods:
-        logger.debug(f"URL to process: {prod}")
+        logger.logger.debug(f"URL to process: {prod}")
         text_unparsed = prod.strip()
         if text_unparsed[-1] == "/":
             text_split = text_unparsed.split("/")[-2]
         else:
             text_split = text_unparsed.split("/")[-1]
         text_split = text_split.split("-")[0]
-        logger.debug(f"Key: {text_split}")
+        logger.logger.debug(f"Key: {text_split}")
         curr_list = dict_return.get(text_split, [])
-        logger.debug(type(curr_list))
-        logger.debug(f"Current dict key '{text_split}' : {curr_list}")
+        logger.logger.debug(type(curr_list))
+        logger.logger.debug(f"Current dict key '{text_split}' : {curr_list}")
         curr_list.append(prod)
-        logger.debug(curr_list)
+        logger.logger.debug(curr_list)
         dict_return[text_split] = curr_list
-        logger.debug(f"After appending, current dict key '{text_split}' : {curr_list}")
+        logger.logger.debug(f"After appending, current dict key '{text_split}' : {curr_list}")
     return dict_return
 
 

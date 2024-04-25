@@ -1,6 +1,9 @@
+# backend/assets/config.py
 import os
 
 from logging import INFO, DEBUG
+
+from shared.configs import BASE_PROJECT_PATH
 
 
 # logginf
@@ -15,5 +18,6 @@ DATE_FMT = "%Y%m%d"
 # envs
 RUN_ENV = "dev"
 # physical routes
-COURSES_JSON = os.path.join(os.getcwd(), "backend", "assets", "cursos.json")
+BACKEND_PATH = os.path.join(BASE_PROJECT_PATH, "backend")
+COURSES_JSON = os.path.join(BACKEND_PATH, "assets", "cursos.json")
 BASE_URL = "https://nataliadufuur.com/clases-presenciales/"

@@ -1,3 +1,5 @@
+# backend/lib/logger.py
+# NOTE: DEPRECATED
 import logging
 import os
 
