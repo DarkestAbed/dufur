@@ -1,4 +1,4 @@
-# demo.py
+# orchestrator/tasks/demo.py
 import httpx   # an HTTP client library and dependency of Prefect
 from prefect import flow, task
 
@@ -35,3 +35,9 @@ def repo_info(repo_owner: str = "PrefectHQ", repo_name: str = "prefect"):
 
     contributors: dict = get_contributors(repo_info)
     print(f"Number of contributors 👷: {len(contributors)}")
+
+
+if __name__ == "__main__":
+    repo_info()
+else:
+    pass
