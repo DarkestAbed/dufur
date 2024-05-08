@@ -14,7 +14,7 @@ def doppler_login():
     from pprint import pprint
     logger.logger.info("Logging in to Doppler...")
     doppler: DopplerSDK = DopplerSDK()
-    logger.logger.info("Requesting access...")
+    logger.logger.info(f"Requesting access for {SECRETS_ENV} environment...")
     try:
         access_token: str = get_token()
     except Exception as e:
